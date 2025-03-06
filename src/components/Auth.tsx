@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { auth, googleProvide } from "../config/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -25,6 +29,15 @@ const Auth = () => {
       console.log("Utilisateur crée avec Google :", userCredential.user);
     } catch (error) {
       console.error("Erreur de connexion avec Google :", error);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      console.log("Utilisateur déconnecté");
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion :", error);
     }
   };
 
@@ -53,6 +66,12 @@ const Auth = () => {
         style={{ background: "red", color: "white", marginLeft: ".5rem" }}
       >
         Sign In With Google
+      </button>
+      <button
+        onClick={logout}
+        style={{ background: "blue", color: "white", marginLeft: ".5rem" }}
+      >
+        Logout
       </button>
     </div>
   );
