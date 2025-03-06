@@ -1,10 +1,11 @@
 import "./App.css";
+import Auth from "./components/Auth";
 
 function App() {
   return (
-    <>
-      <h1>Firebase Course</h1>
-    </>
+    <div>
+      <Auth />
+    </div>
   );
 }
 
