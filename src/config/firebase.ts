@@ -1,6 +1,7 @@
 // Un SDK (Software Development Kit) est un ensemble d'outils et de bibliothèques fournis par Firebase pour intégrer ses services dans une application.
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBFoMB9BJgpcJtIj-FP1y52EZWr8SKl2b0",
@@ -13,5 +14,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth(app);
 export const googleProvide = new GoogleAuthProvider();
+export const db = getFirestore(app);
