@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, googleProvide } from "../config/firebase";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +16,15 @@ const Auth = () => {
       console.log("Utilisateur crée :", userCredential.user);
     } catch (error) {
       console.error("Erreur de connexion :", error);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, googleProvide);
+      console.log("Utilisateur crée avec Google :", userCredential.user);
+    } catch (error) {
+      console.error("Erreur de connexion avec Google :", error);
     }
   };
 
@@ -39,6 +48,12 @@ const Auth = () => {
       />
 
       <button onClick={signIn}>Sign In</button>
+      <button
+        onClick={signInWithGoogle}
+        style={{ background: "red", color: "white", marginLeft: ".5rem" }}
+      >
+        Sign In With Google
+      </button>
     </div>
   );
 };
