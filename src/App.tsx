@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import Auth from "./components/Auth";
-import { db } from "./config/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { auth, db } from "./config/firebase";
+import "./App.css";
+import { collection, onSnapshot } from "firebase/firestore";
+import CreateMovie from "./components/CreateMovie";
 
 interface IMovie {
   id: string;
@@ -14,31 +15,22 @@ interface IMovie {
 function App() {
   const [movies, setMovies] = useState<IMovie[]>([]);
 
-  const moviesCollectionRef = collection(db, "movies");
-
   useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const response = await getDocs(moviesCollectionRef);
-        const data: IMovie[] = response.docs.map((doc) => ({
-          ...(doc.data() as IMovie),
-          id: doc.id,
-        }));
+    const unsubscribe = onSnapshot(collection(db, "movies"), (snapshot) => {
+      const data: IMovie[] = snapshot.docs.map((doc) => ({
+        ...(doc.data() as IMovie),
+        id: doc.id,
+      }));
+      setMovies(data);
+      if (auth.currentUser?.uid) console.log("You're Connected...");
+    });
 
-        setMovies(data);
-      } catch (error) {
-        console.error("Failed to get data :", error);
-      }
-    };
-
-    getMovies();
-  }, [movies]);
+    return () => unsubscribe();
+  }, []);
 
   return (
     <>
-      <div>
-        <Auth />
-      </div>
+      <Auth />
       <div>
         {movies.map((movie) => (
           <div key={movie.id}>
@@ -47,6 +39,7 @@ function App() {
           </div>
         ))}
       </div>
+      <CreateMovie />
     </>
   );
 }
