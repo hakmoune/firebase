@@ -4,13 +4,13 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBFoMB9BJgpcJtIj-FP1y52EZWr8SKl2b0",
-  authDomain: "fir-cours-b4f31.firebaseapp.com",
-  projectId: "fir-cours-b4f31",
-  storageBucket: "fir-cours-b4f31.firebasestorage.app",
-  messagingSenderId: "643073809259",
-  appId: "1:643073809259:web:fbaf132a19c7e5967f8a2e",
-  measurementId: "G-SSRF60TBV3",
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  measurementId: "",
 };
 
 const app = initializeApp(firebaseConfig);
