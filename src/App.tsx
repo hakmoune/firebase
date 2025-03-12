@@ -4,6 +4,7 @@ import { auth, db } from "./config/firebase";
 import "./App.css";
 import { collection, onSnapshot } from "firebase/firestore";
 import CreateMovie from "./components/CreateMovie";
+import DeleteUser from "./components/DeleteUser";
 
 interface IMovie {
   id: string;
@@ -22,7 +23,8 @@ function App() {
         id: doc.id,
       }));
       setMovies(data);
-      if (auth.currentUser?.uid) console.log("You're Connected...");
+      if (auth.currentUser?.uid)
+        console.log(`You're Connected... ${auth.currentUser?.uid}`);
     });
 
     return () => unsubscribe();
@@ -36,6 +38,7 @@ function App() {
           <div key={movie.id}>
             <h1>{movie.title}</h1>
             <p>Date: {movie.releaseDate}</p>
+            <DeleteUser movieId={movie.id} />
           </div>
         ))}
       </div>
